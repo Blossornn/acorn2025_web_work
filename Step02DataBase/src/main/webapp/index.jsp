@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+ // 세션에 "userName" 이라는 키 값으로 저장된 값이 있는 지 읽어와 본다. 
+String userName =(String)session.getAttribute("userName");
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,17 +24,21 @@ body {
 		<jsp:param value="index" name="thisPage" />
 	</jsp:include>
 	<div class="container">
+	<%if(userName != null){ %>
+	<strong><%=userName %></strong>님 로그인중
+	<%} %>
 		<h1>인덱스 페이지 입니다</h1>
 		<ul>
 			<li><a
 				href="${pageContext.request.contextPath }/member/list.jsp">회원목록</a></li>
 			<li><a href="${pageContext.request.contextPath }/book/list.jsp">책목록</a></li>
+			<li><a
+				href="${pageContext.request.contextPath}/user/signup-form.jsp">회원가입</a></li>
 		</ul>
 		<div id="carouselExampleIndicators" class="carousel slide">
 			<div class="carousel-indicators">
 				<button type="button" data-bs-target="#carouselExampleIndicators"
-					data-bs-slide-to="0" class="active" aria-current="true"
-					aria-label="Slide 1"></button>
+					data-bs-slide-to="0" class="active" aria-current="true"aria-labeldu"Slide 1"></button>
 				<button type="button" data-bs-target="#carouselExampleIndicators"
 					data-bs-slide-to="1" aria-label="Slide 2"></button>
 				<button type="button" data-bs-target="#carouselExampleIndicators"
