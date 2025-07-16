@@ -8,6 +8,46 @@ import test.dto.UserDto;
 import test.util.DbcpBean;
 
 public class UserDao {
+	// 비밀번호를 수정 반영하는 메소드
+	public boolean updatePassword(UserDto dto) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		// 변화 된 row 의 갯수를 담을 변수 선언 하고 0 으로 초기화
+		int rowCount = 0;
+
+		try {
+			conn = new DbcpBean().getConn();
+			String sql = """
+					UPDATE users
+					SET password = ?, updatedAt = SYSDATE
+					WHERE userName = ?
+
+					""";
+			pstmt = conn.prepareStatement(sql);
+			// ? 에 순서대로 필요한 값 바인딩
+			pstmt.setString(1, dto.getPassword());
+			pstmt.setString(2, dto.getUserName());
+			// sql 문 실행하고 변화된 (추가된, 수정된, 삭제된) row의 갯수 리턴 받기
+			rowCount = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+
+			}
+		}
+		// 변화 된 rowCount 값을 조사해서 작업의 성공 여부를 알아낼 수 있다.
+		if (rowCount > 0) {
+			return true; // 작업 성공이라는 의미에서 true
+		} else {
+			return false; // 작업 실패라는 의미에서 false
+		}
+	}
 	
 	//  userName을 이용해서 회원 한 명의 정보를 리턴하는 메소드
 	public UserDto getByUserName(String userName) {
