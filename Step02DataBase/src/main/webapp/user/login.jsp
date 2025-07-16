@@ -9,7 +9,7 @@ String userName = request.getParameter("userName");
 String password = request.getParameter("password");
 
 // 아이디 비밀번호가 유효한 정보인지 여부
-boolean isValid = false;
+boolean isValid = false; 
 
 // DB에서 userName 을 이용해서 select 되는 정보가 있는지 select 해 보기
 UserDto dto = new UserDao().getByUserName(userName);
@@ -53,7 +53,7 @@ if (isValid) {
 		
 		<%}else{ %>
 		<p>
-		 아이디 혹인 비밀번호가 틀렸습니다.
+		 아이디 혹은 비밀번호가 틀렸습니다.
 		 <a href="loginform.jsp">다시 시도</a>
 		</p>
 		
