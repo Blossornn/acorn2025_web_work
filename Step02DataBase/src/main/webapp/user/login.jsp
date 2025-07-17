@@ -16,7 +16,7 @@ String encodedUrl = URLEncoder.encode(url,"UTF-8");
 boolean isValid = false; 
 
 // DB에서 userName 을 이용해서 select 되는 정보가 있는지 select 해 보기
-UserDto dto = new UserDao().getByUserName(userName);
+UserDto dto = UserDao.getInstance().getByUserName(userName);
 // 만약 select 된 정보가 있다면 (최소한 userName 은 존재한다는 것)
 if (dto != null) {
 	// raw 비밀번호와 DB에 저장 된 암호화 된 비밀번호를 비교해서 일치하는 지 확인
@@ -37,7 +37,7 @@ if (isValid) {
 	// HttpSession 객체에 "userName"이라는 키 값으로 userName 을 저장한다.
 	session.setAttribute("userName", userName);
 	// 세션 유지시간 설정 (초 단위)
-	session.setMaxInactiveInterval(60*10); // 설정하지 않으면 기본 30분
+	session.setMaxInactiveInterval(60*60); // 설정하지 않으면 기본 30분
 	
 }
 %>
