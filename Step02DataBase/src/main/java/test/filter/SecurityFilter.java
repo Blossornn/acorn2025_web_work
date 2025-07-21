@@ -22,7 +22,9 @@ import jakarta.servlet.http.HttpSession;
 public class SecurityFilter implements Filter {
 	// 로그인 없이 접근 가능한 경로 목록
 	Set<String> whiteList = Set.of("/index.jsp", "/user/loginform.jsp", "/user/login.jsp", "/user/signup-form.jsp",
-			"/user/signup.jsp", "/images/","/upload/");
+			"/user/signup.jsp", "/images/","/upload/","/board/list.jsp","/board/view.jsp"
+			);
+	
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

@@ -54,6 +54,8 @@ public class BookDao {
 	public boolean update(BookDto dto) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		
+		
 		// 변화 된 row 의 갯수를 담을 변수 선언 하고 0 으로 초기화
 		int rowCount = 0;
 
