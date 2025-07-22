@@ -20,7 +20,7 @@ public class BoardDao {
 	// 외부에서 객체 생성을 하지 못 하도록 생성자 의 접근 지정자를 private로 설정
 	private BoardDao() {
 	}
-	
+
 	// 특정 글의 조회수를 증가 시키는 메소드
 	public boolean addViewCount(int num) {
 		Connection conn = null;
@@ -43,7 +43,7 @@ public class BoardDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {	
+			try {
 				if (pstmt != null)
 					pstmt.close();
 				if (conn != null)
@@ -59,11 +59,11 @@ public class BoardDao {
 			return false; // 작업 실패라는 의미에서 false
 		}
 	}
-	
+
 	// 전체 글의 갯수를 리턴하는 메소드
 	public int getCount() {
 		int count = 0;
-		
+
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -75,10 +75,10 @@ public class BoardDao {
 					""";
 			pstmt = conn.prepareStatement(sql);
 			// ? 에 값 바인딩
-			
+
 			// select 문 실행하고 결과를 ResultSet으로 받아온
 			rs = pstmt.executeQuery();
-		
+
 			if (rs.next()) {
 				count = rs.getInt("count");
 			}
@@ -97,7 +97,6 @@ public class BoardDao {
 		}
 		return count;
 	}
-	
 
 	// 특정 page 에 해당하는 row만 select 해서 리턴하는 메소드
 	// BoardDto 객체에 startRowNum과 endRowNum을 담아와서 select
@@ -109,15 +108,15 @@ public class BoardDao {
 		try {
 			conn = new DbcpBean().getConn();
 			String sql = """
-					SELECT *
-				FROM
-					(SELECT result1.*, ROWNUM AS rnum
-					FROM	
-						(SELECT num, writer, title, viewCount, createdAt
-						FROM board
-						ORDER BY num DESC) result1)
-				WHERE rnum BETWEEN ? AND ?
-					""";
+						SELECT *
+					FROM
+						(SELECT result1.*, ROWNUM AS rnum
+						FROM
+							(SELECT num, writer, title, viewCount, createdAt
+							FROM board
+							ORDER BY num DESC) result1)
+					WHERE rnum BETWEEN ? AND ?
+						""";
 			pstmt = conn.prepareStatement(sql);
 			// ? 에 값 바인딩
 			pstmt.setInt(1, dto.getStartRowNum());
@@ -294,12 +293,15 @@ public class BoardDao {
 		try {
 			conn = new DbcpBean().getConn();
 			String sql = """
-					SELECT writer, title, content, viewCount,
+					SELECT *
+					FROM
+					(SELECT b.num, writer, title, content, viewCount,
 					 TO_CHAR(b.createdAt,  'YY"년" MM"월" DD"일" HH24:MI') AS createdAt,
-					 profileImage
+					 profileImage, LAG(b.num, 1, 0) OVER (ORDER BY b.num DESC) AS prevNum,
+					LEAD(b.num,1, 0) OVER (ORDER BY b.num DESC) AS nextNum
 					FROM board b
-					INNER JOIN users u ON b.writer = u.userName
-					WHERE b.num = ?
+					INNER JOIN users u ON b.writer = u.userName)
+					WHERE num = ?
 					""";
 			pstmt = conn.prepareStatement(sql);
 			// ? 에 값 바인딩
@@ -316,7 +318,8 @@ public class BoardDao {
 				dto.setViewCount(rs.getInt("viewCount"));
 				dto.setCreatedAt(rs.getString("createdAt"));
 				dto.setProfileImage(rs.getString("profileImage"));
-				
+				dto.setPrevNum(rs.getInt("prevNum"));
+				dto.setNextNum(rs.getInt("nextNum"));
 
 			}
 		} catch (Exception e) {
