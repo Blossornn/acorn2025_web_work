@@ -1,5 +1,6 @@
 # Created by https://www.toptal.com/developers/gitignore/api/java,eclipse
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,eclipse
+<<<<<<< HEAD
 !**/WEB-INF/lib/*.jar
 
 .classpath
@@ -18,6 +19,26 @@ local.properties
 .loadpath
 .recommenders
 
+=======
+
+# /WEB-INF/lib/ 폴더 안에 있는 jar 파일은 예외로 하기
+!**/WEB-INF/lib/*.jar
+.classpath
+.project
+
+### Eclipse ###
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+>>>>>>> branch 'master' of https://github.com/danjae1/project-minib3.git
 
 # External tool builders
 .externalToolBuilders/

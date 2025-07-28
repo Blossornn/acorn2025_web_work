@@ -17,6 +17,17 @@ public class BoardDto {
 	// 이전글, 다음글 처리를 위한 필드
 	private int prevNum;
 	private int nextNum;
+	
+	private String keyword;
+	
+	
+	
+	public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
 	public int getNum() {
 		return num;
 	}
