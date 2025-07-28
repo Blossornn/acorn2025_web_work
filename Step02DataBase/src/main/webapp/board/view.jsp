@@ -117,9 +117,13 @@ boolean isLogin = userName == null ? false : true;
 				<%} else {%>
 
 				<div class="card-body d-flex flex-column flex-sm-row position-relative">
+				
+				
 					<%if(tmp.getNum() != tmp.getGroupNum()){ %>
 		            		<i class="bi bi-arrow-return-right position-absolute" style="top:0;left:-30px"></i>
 		            	<%} %>
+		            	
+		            	
 					<%--댓글 작성자가 로그인 된 userName과 같을때만 삭제 버튼 출력 --%>
 
 					<%if (tmp.getWriter().equals(userName)) {%>

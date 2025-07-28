@@ -36,6 +36,8 @@ HttpSession 객체에 저장된 정보를 읽어올 수 있다.
 if (isValid) {
 	// HttpSession 객체에 "userName"이라는 키 값으로 userName 을 저장한다.
 	session.setAttribute("userName", userName);
+	//role 정보도저장
+	session.setAttribute("role", dto.getRole());
 	// 세션 유지시간 설정 (초 단위)
 	session.setMaxInactiveInterval(60*60); // 설정하지 않으면 기본 30분
 	

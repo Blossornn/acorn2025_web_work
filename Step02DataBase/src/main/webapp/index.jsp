@@ -26,7 +26,8 @@ body {
 	<div class="container">
 		<h1>인덱스 페이지 입니다</h1>
 		<ul>
-		
+			<li><a href="${pageContext.request.contextPath}/admin/index.jsp">관리자페이지</a></li>
+			<li><a href="${pageContext.request.contextPath}/staff/index.jsp">직원</a></li>
 		</ul>
 		<div id="carouselExampleIndicators" class="carousel slide">
 			<div class="carousel-indicators">
