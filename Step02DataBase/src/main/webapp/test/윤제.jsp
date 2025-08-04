@@ -1,0 +1,24 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+	// request 객체에 특정 key 값으로 담긴 정보 추출하기
+	String orgFileName = (String)request.getAttribute("orgFileName");
+	String saveFileName = (String)request.getAttribute("saveFileName");
+	long fileSize = (long)request.getAttribute("fileSize");
+	%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>/test/윤제.jsp</title>
+</head>
+<body>
+	<div class="contaier">
+		<p>윤제가 응답합니다</p>
+		<p>원본 파일 명 : <%=orgFileName%></p>
+		<p>새 파일 명 : <%=saveFileName %></p>
+		<p>파일 크기 : <%=fileSize %></p>
+		
+		<a href="${pageContext.request.contextPath}/test/download?orgFileName=${orgFileName}&saveFileName=${saveFileName}&fileSize=${fileSize}">다운로드</a>
+	</div>
+</body>
+</html>

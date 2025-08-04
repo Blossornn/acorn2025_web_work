@@ -13,6 +13,7 @@ String userName = (String) session.getAttribute("userName");
 if (!writer.equals(userName)) {
 	response.sendError(HttpServletResponse.SC_FORBIDDEN, "남의 글 지우려고 하면 혼나요");
 	return;
+
 }
 // DB 에서 해당 글을 삭제하고
 BoardDao.getInstance().deleteByNum(num);
@@ -28,6 +29,7 @@ BoardDao.getInstance().deleteByNum(num);
 	<script>
 		alert("삭제 완료");
 		location.href = "${pageContext.request.contextPath}/board/list.jsp";
+
 	</script>
 </body>
 </html>

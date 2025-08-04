@@ -7,7 +7,7 @@
 	//로그인된 userName 이 있는지 읽어와 본다
 	String userName=(String)session.getAttribute("userName");
 %>
-	<nav class="navbar navbar-expand-md bg-success fixed-top" data-bs-theme="dark">
+	<nav class="navbar navbar-expand-md bg-success fixed-top " data-bs-theme="dark">
 		<div class="container">
 			<a class="navbar-brand" href="${pageContext.request.contextPath }/">Acorn</a>
 			<button class="navbar-toggler" type="button"
@@ -24,6 +24,9 @@
 					</li>
 						<li class="nav-item">
 						<a class="nav-link <%=thisPage.equals("board") ? "active":""%>" href="${pageContext.request.contextPath }/board/list.jsp">Board</a>
+					</li>
+						<li class="nav-item">
+						<a class="nav-link <%=thisPage.equals("gallery") ? "active":""%>" href="${pageContext.request.contextPath }/gallery/list.jsp">Gallery</a>
 					</li>
 				</ul>
 	            <!-- 오른쪽 사용자 메뉴 -->

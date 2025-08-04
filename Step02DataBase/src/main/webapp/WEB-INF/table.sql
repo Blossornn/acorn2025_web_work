@@ -1,3 +1,22 @@
+CREATE TABLE gallery (
+num NUMBER PRIMARY KEY,
+title VARCHAR2(100) NOT NULL, -- 제목
+writer VARHAR2(20) NOT NULL, -- 업로더
+content CLOB, -- 내용 설명
+createdAt DATE DEFAULT SYSDATE
+);
+
+-- gallery 테이블은 board_seq를 공유할 예정
+
+CREATE TABLE gallery_image (
+num NUMBER PRIMARY KEY,
+galleryNum NUMBER REFERENCES gallery(num),
+saveFileName VARCHAR2(100) NOT NULL, -- 업로드 된 사진의 저장된 파일 명 만일 사진이 여러개라면 동일한 gallery_num으로 여러개의 row가 저장된다.
+createdAt DATE DEFAULT SYSDATE
+);
+
+CREATE SEQUENCE gallery_image_seq;
+
 CREATE TABLE comments (
 num NUMBER PRIMARY KEY, -- 댓글의 글번호
 writer VARCHAR2(20) NOT NULL, -- 작성자
