@@ -58,6 +58,7 @@ padding:70px;
 			new Masonry(grid,{percentPosition:true});
 		});
 	</script>
+		<jsp:include page="/WEB-INF/include/footer.jsp"></jsp:include>
 </body>
 </html>
 

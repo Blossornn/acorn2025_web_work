@@ -26,10 +26,16 @@
 <meta charset="UTF-8">
 <title>/Gallery/view.jsp</title>
 <style>
+body{
+padding:70px;
+}
 </style>
 <jsp:include page="/WEB-INF/include/resource.jsp"></jsp:include>
 </head>
 <body>
+	<jsp:include page="/WEB-INF/include/navbar.jsp">
+		<jsp:param value="gallery" name="thisPage"/>
+	</jsp:include>
 	<div class="container">
 		<div class="card shadow">
 			<!-- 작성자 정보 -->
@@ -46,6 +52,7 @@
 			<!--  본문 -->
 			<div class="card-body">
 				<h5 class="card-title"><%=dto.getTitle() %></h5>
+				<%-- textarea 로 입력한 글에서 개행기호는 br 요소로 변경해서 출력하기 --%>
 				<p class="card-text"><%=dto.getContent().replaceAll("\n", "<br>") %></p>
 				<div class="row">
 					<%for (GalleryImageDto tmp : images) {%>
@@ -151,8 +158,6 @@
 			<%}%>
 		</div> <!-- comments -->
 	</div><!-- .container -->
-</body>
-
 	<script>
     	//클라이언트가 로그인 했는지 여부
     	const isLogin = <%=isLogin%>;
@@ -231,4 +236,6 @@
             });
         });
     </script>
+    	<jsp:include page="/WEB-INF/include/footer.jsp"></jsp:include>
+</body>
 </html>

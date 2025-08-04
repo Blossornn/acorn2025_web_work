@@ -67,7 +67,7 @@
 </jsp:include>
 <div class="container mt-4">
     <h2><i class="bi bi-image"></i> 새 갤러리 작성</h2>
-    <form action="${pageContext.request.contextPath }/gallery/save" method="post" enctype="multipart/form-data">
+    <form  id ="saveForm" action="${pageContext.request.contextPath }/gallery/save" method="post" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="title" class="form-label">제목</label>
             <input type="text" class="form-control" id="title" name="title" required>
@@ -195,6 +195,19 @@
             reader.readAsDataURL(file);
         });
     }
+    
+
+	// 폼에 "submit" 이벤트가 일어 났을 때 실행 할 함수 등록
+	document.querySelector("#saveForm").addEventListener("submit", (e)=>{
+		// 여기서 폼 입력란에 대한 검증을 하고 폼 제출을 막고 싶으면 e.preventDefault() 를 실행하게 하면 된다.
+		
+		
+		// 만약 선택 한 파일이 없다면
+		if(selectedFile.length < 1 ){
+			alert("업로드 할 이미지를 1 개 이상 선택 해 주세요");
+			e.preventDefault();
+		}
+	});
 </script>
 
 </body>
