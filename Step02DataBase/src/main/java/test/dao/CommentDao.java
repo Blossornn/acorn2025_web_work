@@ -111,12 +111,24 @@ public class CommentDao {
 		try {
 			conn = new DbcpBean().getConn();
 			String sql = """
-				SELECT comments.num, comments.writer, comments.targetWriter, comments.content, comments.deleted, comments.groupNum,
-				 comments.createdAt, users.profileImage
-				FROM comments
-				INNER JOIN users ON comments.writer = users.userName
-				WHERE parentNum = ?
-				ORDER BY comments.groupNum ASC, comments.num ASC
+				SELECT c.num, c.writer, c.targetWriter, c.content, c.deleted, c.groupNum,
+				 u.profileImage, 
+				 CASE
+				   WHEN SYSDATE - c.createdAt < 1/1440 THEN '1분 전'
+				   WHEN SYSDATE - c.createdAt < 10/1440 THEN '10분 전'
+				   WHEN SYSDATE - c.createdAt < 1/24 THEN '1시간 전'
+				   WHEN SYSDATE - c.createdAt < 365 THEN
+					   TO_CHAR(TRUNC(SYSDATE- c.createdAt)) || '일 전'
+				   WHEN SYSDATE - c.createdAt < 730 THEN '1년 전'
+				   ELSE '2년 이상'
+				   END AS createdAt,
+				   (SELECT COUNT(*) 
+				   FROM comments
+				   WHERE groupNum = c.num AND num != groupNum ) AS replyCount
+				FROM comments c
+				INNER JOIN users u ON c.writer = u.userName
+				WHERE c.parentNum = ?
+				ORDER BY c.groupNum ASC, c.num ASC
 					""";
 			pstmt = conn.prepareStatement(sql);
 			// ? 에 값 바인딩
@@ -135,6 +147,7 @@ public class CommentDao {
 				dto.setDeleted(rs.getString("deleted"));
 				dto.setCreatedAt(rs.getString("createdAt"));
 				dto.setProfileImage(rs.getString("profileImage"));
+				dto.setReplyCount(rs.getInt("replyCount")); // 대댓글의 갯수
 				
 				list.add(dto);
 			}
