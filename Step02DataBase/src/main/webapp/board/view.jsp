@@ -10,7 +10,7 @@
 int num = Integer.parseInt(request.getParameter("num").trim());
 //DB 에서 해당글의 자세한 정보를 얻어낸다.
 BoardDto dto = BoardDao.getInstance().getByNum(num);
-//로그인된 userName (null 일 가능성 있음)
+//로그인된 userName (null 일 가능성 있음)4
 String userName = (String) session.getAttribute("userName");
 //만일 본인 글 자세히 보기가 아니면 조회수를 1 증가 시킨다
 if (!dto.getWriter().equals(userName)) {
@@ -154,8 +154,8 @@ boolean isLogin = userName == null ? false : true;
 							<div>
 								<strong><%=tmp.getWriter()%></strong>
 								 <span>@<%=tmp.getTargetWriter()%></span>
+								<small class = "text-muted"><%=tmp.getCreatedAt()%></small>
 							</div>
-							<small><%=tmp.getCreatedAt()%></small>
 						</div>
 						<pre><%=tmp.getContent()%></pre>
 						<%--댓글 작성자가 로그인된 userName과 같으면 수정폼, 다르면 댓글 폼을 출력 --%>

@@ -8,6 +8,7 @@
 // 폼 전송되는 아이디와 비밀번호 추출하기
 String userName = request.getParameter("userName");
 String password = request.getParameter("password");
+// 로그인 후 가야 할 목적지 정보
 String url = request.getParameter("url");
 // 로그인 실패 를 대비해서 목적지 정보를 인코딩 한 결과도 준비
 String encodedUrl = URLEncoder.encode(url,"UTF-8");
@@ -41,6 +42,36 @@ if (isValid) {
 	// 세션 유지시간 설정 (초 단위)
 	session.setMaxInactiveInterval(60*60); // 설정하지 않으면 기본 30분
 	
+}
+
+// 체크박스를 체크한 상태로 로그인 버튼을 누르면 null이 아니다 (체크하지 않으면 null)
+String isSave =request.getParameter("isSave");
+if(isSave != null) {
+	// 입력한 아이디 비밀번호를 쿠키로 응답하고 일주일동안 유지되도록 한다.
+	// 아이디 비밀번호를 쿠키로 응답하고 일주일동안 유지되도록 한다
+	Cookie cook1 = new Cookie("savedUserName", userName);
+	Cookie cook2 = new Cookie("savedPassword", password);
+	cook1.setMaxAge(60*60*24*7);
+	cook2.setMaxAge(60*60*24*7);
+	// 쿠키경로
+	//cook1.setPath("/"); // 모든 경로에서 사용할 수 있는 쿠키
+	//cook1.setPath("/user/"); // user 경로에서만 사용할 수 있는 쿠키
+	// 설정하지 않으면 현재 경로에서만 사용할 수 있음
+	
+	
+	// HttpServletResponse 객체에 Cookie 객체를 담으면 응답할 때 알아서 쿠키가 응답된다.
+	response.addCookie(cook1);
+	response.addCookie(cook2);
+}else{
+	// 체크박스를 체크하지 않았으면 쿠키를 삭제
+	// 특정 키값으로 저장된 쿠키 값 삭제하기 (value 에는 아무 값이나 넣어도 상관 없음)
+	Cookie cook1 = new Cookie("savedUserName", "");
+	Cookie cook2 = new Cookie("savedPassword", null);
+	// 쿠키 유지시간을 0으로 설정해 응답하면 쿠키가 삭제되는 효과를 낸다.
+	cook1.setMaxAge(0);
+	cook2.setMaxAge(0);
+	response.addCookie(cook1);
+	response.addCookie(cook2);
 }
 %>
 <!DOCTYPE html>
