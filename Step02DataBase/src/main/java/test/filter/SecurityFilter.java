@@ -22,7 +22,8 @@ import jakarta.servlet.http.HttpSession;
 public class SecurityFilter implements Filter {
 	// 로그인 없이 접근 가능한 경로 목록
 	Set<String> whiteList = Set.of("/index.jsp", "/user/loginform.jsp", "/user/login.jsp", "/user/signup-form.jsp",
-			"/user/signup.jsp", "/images/","/upload/","/board/list.jsp","/board/view.jsp","/test","/gallery/list.jsp"
+			"/user/signup.jsp", "/images/","/upload/","/board/list.jsp","/board/view.jsp","/test","/gallery/list.jsp",
+			"/user/check-id.jsp"
 			);
 	
 
@@ -84,6 +85,9 @@ public class SecurityFilter implements Filter {
 	private boolean isWhiteList(String path) {
 		if ("/".equals(path))
 			return true;
+		
+		// 에러페이지
+		if(path.startsWith("/error")) return true;
 
 		// 반복문 돌면서 모든 whiteList 를 불러내서
 		for (String prefix : whiteList) {
