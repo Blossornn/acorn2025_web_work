@@ -1,0 +1,18 @@
+package com.example.spring04.dto;
+
+import org.apache.ibatis.type.Alias;
+
+import lombok.Getter;
+import lombok.Setter;
+
+// MyBatis에서 제공하는 @Alias 어노테이션을 이용해서 MemberDto type의 별칭을 부여할 수 있음
+// 부여된 별칭을 Mapper xml 문서에서 parameterType or resultType 으로 활용할 수 있음
+@Alias("memberDto")
+@Getter
+@Setter
+public class MemberDto {
+
+	private int num;
+	private String name;
+	private String addr;
+}
